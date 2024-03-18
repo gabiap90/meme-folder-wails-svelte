@@ -1,5 +1,10 @@
 # README
 
+An app I shitcoded while trying to learn a bit of go and svelte while checking software dev frameworks. Don't judge to harsh
+
+Select a folder, will read all the images -> map them of json
+Uses that json to store tags to each image
+
 ## About
 
 This is the official Wails Svelte template.
