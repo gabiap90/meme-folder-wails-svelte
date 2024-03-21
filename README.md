@@ -16,7 +16,7 @@ Goal: To be able to swiftly find and send images to chats
 - add linked images and copy their links when needed
 
 ## 0.2
-- Functionality: add an image by link in the meme-folder.json file - done
+- add an image by link in the meme-folder.json file - done
 
 ## TODO features
 - Fix for windows - oh hold until wails 3
