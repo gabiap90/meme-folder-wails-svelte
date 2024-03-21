@@ -1,6 +1,13 @@
 <script lang="ts">
-    import { OpenInFileExplorer } from "../wailsjs/go/main/App.js";
+    import { get } from "svelte/store";
+    import {
+        DeleteImageWithLink,
+        OpenInFileExplorer,
+    } from "../wailsjs/go/main/App.js";
     import ImageModal from "./ImageModal.svelte";
+    import { imageFolderPath } from "./store/imageFolder.js";
+    import { updateImages } from "./store/images.js";
+
     export let image;
     export let showEditTags = false;
 
@@ -11,11 +18,29 @@
     function closeModal() {
         showEditTags = false;
     }
+
+    async function copyLink() {
+        await navigator.clipboard.writeText(image.Link);
+    }
+
+    async function deleteLink() {
+        updateImages(
+            Object.values(
+                await DeleteImageWithLink(get(imageFolderPath), image.Name),
+            ),
+        );
+    }
 </script>
 
 <div class="image-container">
     <div class="image-buttons">
-        <button on:click={onOpenFileInExplorer}>Open file</button>
+        {#if image.Link.length > 0}
+            <button on:click={copyLink}>Copy link</button>
+            <button on:click={deleteLink}>Delete</button>
+        {/if}
+        {#if image.Link.length === 0}
+            <button on:click={onOpenFileInExplorer}>Open file</button>
+        {/if}
         <button on:click={() => (showEditTags = true)}>Edit tags</button>
     </div>
     {#if showEditTags}

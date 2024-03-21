@@ -58,3 +58,11 @@ func (a *App) AddTag(location string, imageName string, addedTag string) Images 
 func (a *App) RemoveTag(location string, imageName string, removedTag string) Images {
 	return _removeTag(location, imageName, removedTag)
 }
+
+func (a *App) AddImageByLink(location string, link string) Images {
+	return _addImageByLink(location, link)
+}
+
+func (a *App) DeleteImageWithLink(location string, name string) Images {
+	return _deleteImageWithLink(location, name)
+}

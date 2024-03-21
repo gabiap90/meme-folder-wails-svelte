@@ -12,6 +12,8 @@
 
   let resultText = "Folder with reactions here 👇";
   let imageFolder;
+  let childRef;
+  let newImageLink = "";
 
   imageFolderPath.subscribe((value) => {
     imageFolder = value;
@@ -21,6 +23,13 @@
     SetFolderPath().then((res) => {
       updateFolderPath(res);
     });
+  }
+
+  function addNewImage() {
+    if (newImageLink.length > 0) {
+      childRef.addNewImage(newImageLink);
+      newImageLink = "";
+    }
   }
 </script>
 
@@ -36,7 +45,9 @@
       id="name"
       type="text"
     />
-    <button class="btn" on:click={setFolderPath}>Show Images</button>
+    <button class="btn" on:click={setFolderPath}>Select meme folder</button>
+    <input bind:value={newImageLink} />
+    <button class="btn" on:click={addNewImage}>Add new link</button>
   </div>
-  <Gallery {imageFolder} />
+  <Gallery {imageFolder} bind:this={childRef} />
 </main>

@@ -26,7 +26,6 @@
     }
 
     function onkeydownHandler(event) {
-        console.log(event);
         if (event.key === "Enter") {
             addTagToSearch();
         }

@@ -6,6 +6,9 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"strings"
+
+	"github.com/google/uuid"
 )
 
 var imagePattern = regexp.MustCompile(`(?i)\.(jpg|jpeg|png|gif|bmp|tiff)$`)
@@ -109,8 +112,8 @@ func updateJsonImages(location string) Images {
 		}
 	}
 
-	for key, _ := range jsonImages {
-		if _, exist := folderImages[key]; !exist {
+	for key, image := range jsonImages {
+		if _, exist := folderImages[key]; !exist && image.Link == "" {
 			delete(jsonImages, key)
 		}
 	}
@@ -148,6 +151,44 @@ func _removeTag(location string, imageName string, removedTag string) Images {
 		image.Tags = newTags
 		images[imageName] = image
 	}
+	writeJsonImages(images, location)
+	return images
+}
+
+func _addImageByLink(location string, link string) Images {
+	if location == "" {
+		log.Println("filepath empty: going to default")
+		location = getDirname()
+	}
+
+	var imageName string
+	lastSlashIndex := strings.LastIndex(link, "/")
+	if lastSlashIndex != -1 {
+		imageName = link[lastSlashIndex+1:]
+	}
+
+	images := readJsonImages(location)
+	newImage := Image{
+		Name: imageName,
+		Path: link,
+		Link: link,
+		Id:   uuid.New().String(),
+		Tags: []string{"linked"},
+	}
+	images[newImage.Id] = newImage
+	writeJsonImages(images, location)
+	return images
+}
+
+func _deleteImageWithLink(location string, name string) Images {
+	if location == "" {
+		log.Println("filepath empty: going to default")
+		location = getDirname()
+	}
+
+	images := readJsonImages(location)
+	delete(images, name)
+
 	writeJsonImages(images, location)
 	return images
 }

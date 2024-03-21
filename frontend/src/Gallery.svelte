@@ -1,8 +1,13 @@
 <script>
     import { onMount } from "svelte";
-    import { GetImages } from "../wailsjs/go/main/App.js";
+    import { GetImages, AddImageByLink } from "../wailsjs/go/main/App.js";
     import Image from "./Image.svelte";
-    import { allTags, images, selectedTags, updateImages } from "./store/images.js";
+    import {
+        allTags,
+        images,
+        selectedTags,
+        updateImages,
+    } from "./store/images.js";
     import SearchTagsInput from "./SearchTagsInput.svelte";
 
     export let imageFolder;
@@ -11,6 +16,13 @@
     let selectedTagsLocal = [];
     let tempAllTags = [];
     let tempPhotos = [];
+
+    export async function addNewImage(link) {
+        const imagesTemp = Object.values(
+            await AddImageByLink(imageFolder, link),
+        );
+        updateImages(imagesTemp);
+    }
 
     async function fetchImages() {
         const imagesTemp = Object.values(await GetImages(imageFolder));
@@ -54,7 +66,6 @@
     <SearchTagsInput allTags={tempAllTags} />
     <div class="gallery">
         <!-- svelte-ignore a11y-img-redundant-alt -->
-        <!-- <div>{JSON.stringify(photos)}</div> -->
         {#each tempPhotos as photo}
             <Image image={photo} />
         {/each}
