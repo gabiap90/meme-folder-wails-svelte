@@ -1,6 +1,6 @@
 # README
 
-An app I shitcoded while trying to play around with go and svelte and checking software dev frameworks. 
+An app I shitcoded while trying to play around with go and svelte while checking on software dev frameworks. 
 
 ## How it works
 
