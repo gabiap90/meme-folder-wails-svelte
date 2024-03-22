@@ -17,7 +17,7 @@
     async function addTag() {
         updateImages(
             Object.values(
-                await AddTag(get(imageFolderPath), image.Name, newTagName),
+                await AddTag(get(imageFolderPath), image.Id, newTagName),
             ),
         );
         newTagName = "";
@@ -26,7 +26,7 @@
     async function removeTag(removedTag) {
         updateImages(
             Object.values(
-                await RemoveTag(get(imageFolderPath), image.Name, removedTag),
+                await RemoveTag(get(imageFolderPath), image.Id, removedTag),
             ),
         );
         focusInput();

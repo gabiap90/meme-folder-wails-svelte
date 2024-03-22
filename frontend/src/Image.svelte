@@ -26,7 +26,7 @@
     async function deleteLink() {
         updateImages(
             Object.values(
-                await DeleteImageWithLink(get(imageFolderPath), image.Name),
+                await DeleteImageWithLink(get(imageFolderPath), image.Id),
             ),
         );
     }

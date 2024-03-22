@@ -141,7 +141,6 @@ func _addTag(location string, imageName string, addedTag string) Images {
 
 func _removeTag(location string, imageName string, removedTag string) Images {
 	if location == "" {
-		log.Println("filepath empty: going to default")
 		location = getDirname()
 	}
 
@@ -157,7 +156,6 @@ func _removeTag(location string, imageName string, removedTag string) Images {
 
 func _addImageByLink(location string, link string) Images {
 	if location == "" {
-		log.Println("filepath empty: going to default")
 		location = getDirname()
 	}
 
