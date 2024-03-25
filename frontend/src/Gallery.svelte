@@ -17,9 +17,9 @@
     let tempAllTags = [];
     let tempPhotos = [];
 
-    export async function addNewImage(link) {
+    export async function addNewImage(link, newTag) {
         const imagesTemp = Object.values(
-            await AddImageByLink(imageFolder, link),
+            await AddImageByLink(imageFolder, link, newTag),
         );
         updateImages(imagesTemp);
     }

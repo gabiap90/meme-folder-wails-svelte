@@ -154,7 +154,7 @@ func _removeTag(location string, imageName string, removedTag string) Images {
 	return images
 }
 
-func _addImageByLink(location string, link string) Images {
+func _addImageByLink(location string, link string, newTag string) Images {
 	if location == "" {
 		location = getDirname()
 	}
@@ -165,14 +165,22 @@ func _addImageByLink(location string, link string) Images {
 		imageName = link[lastSlashIndex+1:]
 	}
 
+	var newTags []string
+	if newTag != "" {
+		newTags = []string{"linked", newTag}
+	} else {
+		newTags = []string{"linked"}
+	}
+
 	images := readJsonImages(location)
 	newImage := Image{
 		Name: imageName,
 		Path: link,
 		Link: link,
 		Id:   uuid.New().String(),
-		Tags: []string{"linked"},
+		Tags: newTags,
 	}
+
 	images[newImage.Id] = newImage
 	writeJsonImages(images, location)
 	return images

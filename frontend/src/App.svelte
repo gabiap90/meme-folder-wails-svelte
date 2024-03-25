@@ -14,6 +14,7 @@
   let imageFolder;
   let childRef;
   let newImageLink = "";
+  let newTag = "";
 
   imageFolderPath.subscribe((value) => {
     imageFolder = value;
@@ -27,9 +28,14 @@
 
   function addNewImage() {
     if (newImageLink.length > 0) {
-      childRef.addNewImage(newImageLink);
+      childRef.addNewImage(newImageLink, newTag);
       newImageLink = "";
+      newTag = "";
     }
+  }
+
+  function filterSpaces() {
+    newTag = newTag.replace(/\s+/g, "").toLowerCase();
   }
 </script>
 
@@ -46,7 +52,12 @@
       type="text"
     />
     <button class="btn" on:click={setFolderPath}>Select meme folder</button>
-    <input bind:value={newImageLink} />
+    <input placeholder="new image link" bind:value={newImageLink} />
+    <input
+      placeholder="initial image tag"
+      bind:value={newTag}
+      on:input={filterSpaces}
+    />
     <button class="btn" on:click={addNewImage}>Add new link</button>
   </div>
   <Gallery {imageFolder} bind:this={childRef} />
